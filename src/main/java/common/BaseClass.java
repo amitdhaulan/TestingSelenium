@@ -7,10 +7,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Optional;
 
 public class BaseClass {
-
-    public static void main(String... args){
+    public BaseClass(){
+        homePageObjects hmo = new homePageObjects();
+        hmo.print();
         openBrowser();
     }
+
     public static void openBrowser(){
         System.setProperty(
                 "webdriver.chrome.driver",
