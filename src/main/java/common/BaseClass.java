@@ -1,22 +1,21 @@
 package common;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.InputStream;
 
-import java.util.Optional;
 
 public class BaseClass {
-    public BaseClass(){
-        homePageObjects hmo = new homePageObjects();
-        hmo.print();
+    public BaseClass() {
         openBrowser();
     }
 
-    public static void openBrowser(){
+    public void openBrowser() {
         System.setProperty(
                 "webdriver.chrome.driver",
-                "E:\\amit\\Java_programs\\TestingSelenium\\src\\main\\resources\\chromedriver.exe");
+                ".\\src\\main\\resources\\chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
