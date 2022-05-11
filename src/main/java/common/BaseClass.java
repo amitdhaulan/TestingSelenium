@@ -3,6 +3,7 @@ package common;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterTest;
 
 import java.io.BufferedReader;
@@ -15,11 +16,14 @@ import java.util.logging.Logger;
 public class BaseClass {
 
     Logger log;
+    public static EventFiringWebDriver eventDriver;
     public static WebDriver driver = null;
     private final Properties properties;
     BufferedReader reader;
 
     public BaseClass() {
+
+
         final String propertyFilePath = ".\\src\\main\\resources\\configs\\Configuration.properties";
         log = Logger.getLogger(String.valueOf(BaseClass.class));
         try {
@@ -44,12 +48,23 @@ public class BaseClass {
         options.addArguments("start-maximized");
         options.addArguments("--disable-extensions");
         options.addArguments("--auto-open-devtools-for-tabs");
+        options.addArguments("networkConnectionEnabled");
+
         driver = new ChromeDriver(options);
 //        this.driver = webDriver;
 
+        registerEventHandler();
+
         // Launch Website
-        driver.get(getApplicationUrl());
-        log.info(driver.getTitle()+" Launched");
+        eventDriver.get(getApplicationUrl());
+
+        log.info(eventDriver.getTitle() + " Launched");
+    }
+
+    public void registerEventHandler() {
+        eventDriver = new EventFiringWebDriver(driver);
+        EventListener handler = new EventListener();
+        eventDriver.register(handler);
     }
 
     public String getDriverPath() {
@@ -72,11 +87,11 @@ public class BaseClass {
 
     @AfterTest
     public void shutDown() {
-        driver.close();
+        eventDriver.close();
         log.info("Closing the Browser");
     }
 
-    public static WebDriver getDriver(){
-        return driver;
+    public static WebDriver getEventDriver() {
+        return eventDriver;
     }
 }

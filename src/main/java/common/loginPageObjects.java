@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 public class loginPageObjects {
 
     public loginPageObjects() {
-        WebDriver driver = BaseClass.getDriver();
+        WebDriver driver = BaseClass.eventDriver;
     }
 
 
