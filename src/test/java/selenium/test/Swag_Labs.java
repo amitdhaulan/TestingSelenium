@@ -13,8 +13,8 @@ public class Swag_Labs extends BaseClass {
         //Instantiating Login page using initElements()
         loginPageObjects profilePg = PageFactory.initElements(BaseClass.getDriver(), loginPageObjects.class);
 
-        loginPageObjects.getUserName().sendKeys("standard_user");
-        loginPageObjects.getPassword().sendKeys("secret_sauce");
-        loginPageObjects.getLoginButton().click();
+        profilePg.getUserName().sendKeys("standard_user");
+        profilePg.getPassword().sendKeys("secret_sauce");
+        profilePg.getLoginButton().click();
     }
 }

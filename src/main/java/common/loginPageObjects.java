@@ -23,21 +23,19 @@ public class loginPageObjects {
     @FindBy(id="login-button")
     private static WebElement loginButton;
 
-
-
-    public static WebElement getLogo(){
+    public WebElement getLogo(){
         return logo;
     }
 
-    public static WebElement getUserName(){
+    public WebElement getUserName(){
         return userName;
     }
 
-    public static WebElement getPassword(){
+    public WebElement getPassword(){
         return password;
     }
 
-    public static WebElement getLoginButton(){
+    public WebElement getLoginButton(){
         return loginButton;
     }
 }
