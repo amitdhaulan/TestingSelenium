@@ -6,11 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class loginPageObjects {
 
-    public loginPageObjects() {
-        WebDriver driver = BaseClass.eventDriver;
-    }
-
-
     @FindBy(xpath="//div[@class='login_logo']")
     private static WebElement logo;
 
