@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 public class BaseClass {
 
     Logger log;
-    WebDriver driver = null;
-    private Properties properties;
-    private final String propertyFilePath = ".\\src\\main\\resources\\configs\\Configuration.properties";
+    public static WebDriver driver = null;
+    private final Properties properties;
     BufferedReader reader;
 
     public BaseClass() {
+        final String propertyFilePath = ".\\src\\main\\resources\\configs\\Configuration.properties";
         log = Logger.getLogger(String.valueOf(BaseClass.class));
         try {
             reader = new BufferedReader(new FileReader(propertyFilePath));
@@ -45,7 +45,7 @@ public class BaseClass {
         options.addArguments("--disable-extensions");
         options.addArguments("--auto-open-devtools-for-tabs");
         driver = new ChromeDriver(options);
-        this.driver = driver;
+//        this.driver = webDriver;
 
         // Launch Website
         driver.get(getApplicationUrl());
@@ -74,5 +74,9 @@ public class BaseClass {
     public void shutDown() {
         driver.close();
         log.info("Closing the Browser");
+    }
+
+    public static WebDriver getDriver(){
+        return driver;
     }
 }
