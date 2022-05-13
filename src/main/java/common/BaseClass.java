@@ -1,9 +1,11 @@
 package common;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterTest;
 
 import java.io.BufferedReader;
@@ -11,12 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 public class BaseClass {
 
     Logger log;
-    public static EventFiringWebDriver eventDriver;
     public static WebDriver driver = null;
     private final Properties properties;
     BufferedReader reader;
@@ -25,7 +25,8 @@ public class BaseClass {
 
 
         final String propertyFilePath = ".\\src\\main\\resources\\configs\\Configuration.properties";
-        log = Logger.getLogger(String.valueOf(BaseClass.class));
+        BasicConfigurator.configure();
+        log = LogManager.getLogger(BaseClass.class);
         try {
             reader = new BufferedReader(new FileReader(propertyFilePath));
             properties = new Properties();
@@ -51,20 +52,11 @@ public class BaseClass {
         options.addArguments("networkConnectionEnabled");
 
         driver = new ChromeDriver(options);
-//        this.driver = webDriver;
-
-        registerEventHandler();
 
         // Launch Website
-        eventDriver.get(getApplicationUrl());
+        driver.get(getApplicationUrl());
 
-        log.info(eventDriver.getTitle() + " Launched");
-    }
-
-    public void registerEventHandler() {
-        eventDriver = new EventFiringWebDriver(driver);
-        EventListener handler = new EventListener();
-        eventDriver.register(handler);
+        log.info(driver.getTitle() + " Launched");
     }
 
     public String getDriverPath() {
@@ -87,11 +79,11 @@ public class BaseClass {
 
     @AfterTest
     public void shutDown() {
-        eventDriver.close();
+        driver.close();
         log.info("Closing the Browser");
     }
 
     public static WebDriver getEventDriver() {
-        return eventDriver;
+        return driver;
     }
 }
