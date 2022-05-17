@@ -48,8 +48,11 @@ public class BaseClass {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("--disable-extensions");
-        options.addArguments("--auto-open-devtools-for-tabs");
+//        options.addArguments("--auto-open-devtools-for-tabs");
         options.addArguments("networkConnectionEnabled");
+
+        options.addArguments("--ignore-ssl-errors=yes");
+        options.addArguments("--ignore-certificate-errors");
 
         driver = new ChromeDriver(options);
 
@@ -77,11 +80,11 @@ public class BaseClass {
         else throw new RuntimeException("URL not specified in the Configuration.properties file.");
     }
 
-    @AfterTest
-    public void shutDown() {
-        driver.close();
-        log.info("Closing the Browser");
-    }
+//    @AfterTest
+//    public void shutDown() {
+//        driver.close();
+//        log.info("Closing the Browser");
+//    }
 
     public static WebDriver getEventDriver() {
         return driver;
