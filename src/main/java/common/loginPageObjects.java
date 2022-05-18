@@ -2,17 +2,13 @@ package common;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
 public class loginPageObjects {
 
-    @FindBy(xpath="//div[@class='login_logo']")
-    private static WebElement logo;
-
     @FindBy(id="DBStoreId")
-    private static WebElement dropDown;
+    private static WebElement companyDropDown;
 
     @FindBy(id="Email")
     private static WebElement userName;
@@ -23,20 +19,8 @@ public class loginPageObjects {
     @FindBy(id="btnsubmit")
     private static WebElement loginButton;
 
-
-    @FindBy(xpath="//label[@class='btn btn-primary radiobuttongroup']")
-    private static List<WebElement> bootstrap_menu;
-
-    @FindBy(id="side-menu-calls")
-    private static WebElement leads;
-
-
-    public WebElement getLogo(){
-        return logo;
-    }
-
     public WebElement selectValue(){
-        return dropDown;
+        return companyDropDown;
     }
 
     public WebElement getUserName(){
@@ -49,13 +33,5 @@ public class loginPageObjects {
 
     public WebElement getLoginButton(){
         return loginButton;
-    }
-
-    public List<WebElement> getBootStrap_menu(){
-        return bootstrap_menu;
-    }
-
-    public WebElement getLead(){
-        return leads;
     }
 }
