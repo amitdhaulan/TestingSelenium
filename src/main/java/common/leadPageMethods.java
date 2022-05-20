@@ -19,4 +19,8 @@ public class leadPageMethods {
         loadProperty();
         leadPageObjects.clickLead_bootStrapMenu(properties.getProperty("leadbootstrapmenu1"));
     }
+
+    public void clickOpenButton() {
+        leadPageObjects.getTableRowOpenButton().click();
+    }
 }

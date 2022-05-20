@@ -9,8 +9,8 @@ import java.io.FileNotFoundException;
 
 public class Swag_Labs extends BaseClass {
 
+
     public Swag_Labs() throws FileNotFoundException {
-        System.out.println("Swag_Labs.Swag_Labs");
     }
 
     @Test
@@ -26,5 +26,7 @@ public class Swag_Labs extends BaseClass {
         leadPageMethods.clickLead();
         leadPageMethods.clickBootStrap();
 
+        //Click open button of first row
+        leadPageMethods.clickOpenButton();
     }
 }

@@ -13,11 +13,16 @@ public class leadPageObjects {
     @FindBy(xpath="//label[@class='btn btn-primary radiobuttongroup']")
     private static List<WebElement> lead_bootstrapmenu;
 
+    @FindBy(xpath="//div[@id='FollowUpTodatLeadsGrid']//descendant::table/tbody/tr[1]/td[11]/input")
+    private static WebElement tablepane_rowsbutton;
+
     public WebElement getLead(){ return leads;}
 
     public List<WebElement> getBootStrap_menu(){
         return lead_bootstrapmenu;
     }
+
+    public WebElement getTableRowOpenButton(){ return tablepane_rowsbutton;}
 
     public void clickLead_bootStrapMenu(String menuItem) throws InterruptedException {
         List<WebElement> webElements =  getBootStrap_menu();

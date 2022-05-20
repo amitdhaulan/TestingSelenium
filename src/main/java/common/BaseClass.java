@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class BaseClass {
 
@@ -48,9 +49,9 @@ public class BaseClass {
         else throw new RuntimeException("driverPath not specified in the Configuration.properties file.");
     }
 
-    public long getImplicitlyWait() {
-        String implicitlyWait = properties.getProperty("implicitlyWait");
-        if (implicitlyWait != null) return Long.parseLong(implicitlyWait);
+    public void getImplicitlyWait(String time) {
+        String implicitlyWait = properties.getProperty(time);
+        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
     }
 
