@@ -3,9 +3,13 @@ package common;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -49,7 +53,18 @@ public class BaseClass {
         else throw new RuntimeException("driverPath not specified in the Configuration.properties file.");
     }
 
-    public void getImplicitlyWait(String time) {
+    public void implicitWait(String time) {
+        String implicitlyWait = properties.getProperty(time);
+        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
+        else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
+    }
+
+    public void explicitWait(WebElement webelement) {
+        WebDriverWait wait = new WebDriverWait(driver,100);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(getByFromElement(webelement)));
+    }
+
+    public void fluentWait(String time) {
         String implicitlyWait = properties.getProperty(time);
         if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
@@ -85,5 +100,42 @@ public class BaseClass {
 
     public static WebDriver getDriver() {
         return driver;
+    }
+
+    private By getByFromElement(WebElement element) {
+        By by;
+        String[] pathVariables = (element.toString().split("->")[1].replaceFirst("(?s)(.*)]", "$1" + "")).split(":");
+        String selector = pathVariables[0].trim();
+        String value = pathVariables[1].trim();
+
+        switch (selector) {
+            case "id":
+                by = By.id(value);
+                break;
+            case "className":
+                by = By.className(value);
+                break;
+            case "tagName":
+                by = By.tagName(value);
+                break;
+            case "xpath":
+                by = By.xpath(value);
+                break;
+            case "cssSelector":
+                by = By.cssSelector(value);
+                break;
+            case "linkText":
+                by = By.linkText(value);
+                break;
+            case "name":
+                by = By.name(value);
+                break;
+            case "partialLinkText":
+                by = By.partialLinkText(value);
+                break;
+            default:
+                throw new IllegalStateException("locator : " + selector + " not found!!!");
+        }
+        return by;
     }
 }
