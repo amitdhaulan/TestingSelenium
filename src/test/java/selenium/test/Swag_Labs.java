@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 
 public class Swag_Labs extends BaseClass {
 
-
     public Swag_Labs() throws FileNotFoundException {
     }
 
@@ -23,30 +22,26 @@ public class Swag_Labs extends BaseClass {
         //Login to the application
         loginPageMethods.login();
 
-        //Navigate to Lead>Baltimore
+        //Navigate to Lead > Baltimore
         leadPageMethods.clickLead();
         leadPageMethods.clickBootStrap();
 
         //Get follow id
         explicitWait(common.leadPageObjects.getLeadsTable());
-        String follow_id = leadPageMethods.getFollowId();
-        String actual = follow_id.trim();
+        String follow_id_actual = leadPageMethods.getFollowId();
 
         //Click open button of first row
         explicitWait(common.leadPageObjects.getLeadsTable());
         leadPageMethods.clickOpenButton();
 
         explicitWait(common.leadPageObjects.getCrossButton());
-        String follow_id_name = leadPageMethods.getFollowId_name(follow_id);
+        String follow_id_name = leadPageMethods.getFollowId_name(follow_id_actual);
 
-        System.out.println("-----------------> follow_id "+follow_id.trim());
-        System.out.println("-----------------> follow_id_name "+follow_id_name.trim());
+        System.out.println("follow_id_name"+follow_id_name);
 
-        String expected1 = follow_id_name.substring(0,follow_id.length()+1);
-        String expected  = expected1.trim();
+        String expected = follow_id_name.substring(0,follow_id_actual.length()+1);
 
         //Validating opened lead is the same as the clicked one
-        Assert.assertEquals(actual,expected.trim());
-
+        Assert.assertEquals(follow_id_actual.trim(),expected.trim());
    }
 }

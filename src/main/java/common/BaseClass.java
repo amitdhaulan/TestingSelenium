@@ -60,7 +60,7 @@ public class BaseClass {
     }
 
     public void explicitWait(WebElement webelement) {
-        WebDriverWait wait = new WebDriverWait(driver,100);
+        WebDriverWait wait = new WebDriverWait(driver,500);
         wait.until(ExpectedConditions.visibilityOfElementLocated(getByFromElement(webelement)));
     }
 
