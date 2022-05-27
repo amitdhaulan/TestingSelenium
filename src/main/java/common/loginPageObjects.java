@@ -3,22 +3,24 @@ package common;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class loginPageObjects {
 
-    @FindBy(xpath="//div[@class='login_logo']")
-    private static WebElement logo;
+    @FindBy(id="DBStoreId")
+    private static WebElement companyDropDown;
 
-    @FindBy(id="user-name")
+    @FindBy(id="Email")
     private static WebElement userName;
 
-    @FindBy(id="password")
+    @FindBy(id="Password")
     private static WebElement password;
 
-    @FindBy(id="login-button")
+    @FindBy(id="btnsubmit")
     private static WebElement loginButton;
 
-    public WebElement getLogo(){
-        return logo;
+    public WebElement selectValue(){
+        return companyDropDown;
     }
 
     public WebElement getUserName(){
