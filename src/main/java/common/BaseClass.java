@@ -1,9 +1,8 @@
 package common;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,19 +19,18 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseClass {
 
-    Logger log;
+
     public static WebDriver driver = null;
     static Properties properties;
     static BufferedReader reader;
     static String propertyFilePath="";
 
     public BaseClass() throws FileNotFoundException {
-        BasicConfigurator.configure();
-        log = LogManager.getLogger(BaseClass.class);
+
         loadProperty();
         driver = new ChromeDriver(setChromeOptions());
+
         driver.get(getApplicationUrl());
-        log.info(driver.getTitle() + " Launched");
     }
 
     public static void loadProperty() throws FileNotFoundException {
