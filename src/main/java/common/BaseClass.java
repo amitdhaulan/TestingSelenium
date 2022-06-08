@@ -82,11 +82,14 @@ public class BaseClass {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("--disable-extensions");
-        //        options.addArguments("--auto-open-devtools-for-tabs");
+        options.addArguments("--auto-open-devtools-for-tabs");
         options.addArguments("networkConnectionEnabled");
-
         options.addArguments("--ignore-ssl-errors=yes");
         options.addArguments("--ignore-certificate-errors");
+        options.addArguments("test-type");
+        options.addArguments("enable-strict-powerful-feature-restrictions");
+        options.addArguments("disable-geolocation");
+
         return options;
     }
 
