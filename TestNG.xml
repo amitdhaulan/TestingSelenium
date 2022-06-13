@@ -3,7 +3,7 @@
 <suite name="Suite One">
     <test name="Test One">
         <classes>
-            <class name="selenium.test.Blink_It"></class>
+            <class name="selenium.test.Tools_QA"></class>
         </classes>
     </test>
 </suite>

@@ -9,21 +9,27 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Listeners;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+
 
 public class BaseClass {
-
 
     public static WebDriver driver = null;
     static Properties properties;
     static BufferedReader reader;
-    static String propertyFilePath="";
+    static String propertyFilePath = "";
 
     public BaseClass() throws FileNotFoundException {
 
@@ -31,6 +37,7 @@ public class BaseClass {
         driver = new ChromeDriver(setChromeOptions());
 
         driver.get(getApplicationUrl());
+        applyLog(getClass().toString(), "Application Launched");
     }
 
     public static void loadProperty() throws FileNotFoundException {
@@ -53,18 +60,20 @@ public class BaseClass {
 
     public void implicitWait(String time) {
         String implicitlyWait = properties.getProperty(time);
-        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
+        if (implicitlyWait != null)
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
     }
 
     public void explicitWait(WebElement webelement) {
-        WebDriverWait wait = new WebDriverWait(driver,500);
+        WebDriverWait wait = new WebDriverWait(driver, 500);
         wait.until(ExpectedConditions.visibilityOfElementLocated(getByFromElement(webelement)));
     }
 
     public void fluentWait(String time) {
         String implicitlyWait = properties.getProperty(time);
-        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
+        if (implicitlyWait != null)
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
     }
 
@@ -74,7 +83,7 @@ public class BaseClass {
         else throw new RuntimeException("URL not specified in the Configuration.properties file.");
     }
 
-    public ChromeOptions setChromeOptions(){
+    public ChromeOptions setChromeOptions() {
         System.setProperty(
                 properties.getProperty("driverInformartion"),
                 getDriverPath());
@@ -93,11 +102,11 @@ public class BaseClass {
         return options;
     }
 
-//    @AfterTest
-//    public void shutDown() {
-//        driver.close();
-//        log.info("Closing the Browser");
-//    }
+    @AfterTest
+    public void shutDown() {
+        driver.close();
+        applyLog(getClass().toString(), "Closing the Browser");
+    }
 
     public static WebDriver getDriver() {
         return driver;
@@ -138,5 +147,13 @@ public class BaseClass {
                 throw new IllegalStateException("locator : " + selector + " not found!!!");
         }
         return by;
+    }
+
+    public static void applyLog(String className, String message) {
+        Date date = new Date();
+        System.out.println("");
+        Logger log = Logger.getLogger(className);
+        log.info(date + ": " + message);
+
     }
 }
