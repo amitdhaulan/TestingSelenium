@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 
@@ -41,7 +42,7 @@ public class BaseClass {
     }
 
     public static void loadProperty() throws FileNotFoundException {
-        propertyFilePath = ".\\src\\main\\resources\\configs\\Configuration.properties";
+        propertyFilePath = ".\\resources\\configs\\Configuration.properties";
         reader = new BufferedReader(new FileReader(propertyFilePath));
         properties = new Properties();
         try {
@@ -102,7 +103,7 @@ public class BaseClass {
         return options;
     }
 
-    @AfterTest
+    @AfterSuite
     public void shutDown() {
         driver.close();
         applyLog(getClass().toString(), "Closing the Browser");
@@ -152,7 +153,7 @@ public class BaseClass {
     public static void applyLog(String className, String message) {
         Date date = new Date();
         System.out.println("");
-        Logger log = Logger.getLogger(className);
+        Logger log = Logger.getLogger(""/*className*/);
         log.info(date + ": " + message);
 
     }
