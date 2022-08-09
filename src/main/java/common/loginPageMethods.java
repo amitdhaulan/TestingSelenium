@@ -1,14 +1,21 @@
 package common;
 
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import java.io.FileNotFoundException;
+import static common.BaseClass.loadProperty;
+import static common.BaseClass.properties;
 
 public class loginPageMethods {
-    public void login(){
+    public void login() throws FileNotFoundException {
 
-        loginPageObjects profilePg = PageFactory.initElements(BaseClass.getEventDriver(), loginPageObjects.class);
+        loginPageObjects loginPageObjects = PageFactory.initElements(BaseClass.getDriver(), loginPageObjects.class);
 
-        profilePg.getUserName().sendKeys("standard_user");
-        profilePg.getPassword().sendKeys("secret_sauce");
-        profilePg.getLoginButton().click();
+
+        loadProperty();
+
+        loginPageObjects.getUserName().sendKeys(properties.getProperty("username"));
+        loginPageObjects.getPassword().sendKeys(properties.getProperty("password"));
+        loginPageObjects.getLoginButton().click();
     }
 }
