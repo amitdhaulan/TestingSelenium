@@ -11,8 +11,6 @@ public class loginPageMethods {
 
         loginPageObjects loginPageObjects = PageFactory.initElements(BaseClass.getDriver(), loginPageObjects.class);
 
-        Select dropDown = new Select(loginPageObjects.selectValue());
-        dropDown.selectByVisibleText("301Squad");
 
         loadProperty();
 

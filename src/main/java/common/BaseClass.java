@@ -1,7 +1,6 @@
 package common;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,15 +23,20 @@ public class BaseClass {
     public static WebDriver driver = null;
     static Properties properties;
     static BufferedReader reader;
-    static String propertyFilePath="";
+    static String propertyFilePath = "";
+    ChromeOptions options;
 
     public BaseClass() throws FileNotFoundException {
-        BasicConfigurator.configure();
-        log = LogManager.getLogger(BaseClass.class);
-        loadProperty();
-        driver = new ChromeDriver(setChromeOptions());
-        driver.get(getApplicationUrl());
-        log.info(driver.getTitle() + " Launched");
+        WebDriverManager.chromedriver().setup();
+        options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        driver = new ChromeDriver(options);
+        System.out.println("----------------------------------------> driver "+driver);
+//        driver.get(getApplicationUrl());
+        driver.get("https://www.stubhub.com/houston-astros-houston-tickets-7-1-2022/event/105054103/?sections=691849&ticketClasses=3361&listingId=&listingQty=");
+
+        System.out.println("----------------------------------------> "+driver.getTitle());
+//        log.info(driver.getTitle() + " Launched");
     }
 
     public static void loadProperty() throws FileNotFoundException {
@@ -47,48 +51,47 @@ public class BaseClass {
         }
     }
 
-    public String getDriverPath() {
+/*    public String getDriverPath() {
         String driverPath = properties.getProperty("driverPath");
         if (driverPath != null) return driverPath;
         else throw new RuntimeException("driverPath not specified in the Configuration.properties file.");
-    }
+    }*/
 
     public void implicitWait(String time) {
         String implicitlyWait = properties.getProperty(time);
-        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
+        if (implicitlyWait != null)
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
     }
 
     public void explicitWait(WebElement webelement) {
-        WebDriverWait wait = new WebDriverWait(driver,500);
+        WebDriverWait wait = new WebDriverWait(driver, 500);
         wait.until(ExpectedConditions.visibilityOfElementLocated(getByFromElement(webelement)));
     }
 
     public void fluentWait(String time) {
         String implicitlyWait = properties.getProperty(time);
-        if (implicitlyWait != null) driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
+        if (implicitlyWait != null)
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(implicitlyWait), TimeUnit.SECONDS);
         else throw new RuntimeException("implicitlyWait not specified in the Configuration.properties file.");
     }
 
-    public String getApplicationUrl() {
+    public String getApplicationUrl() throws FileNotFoundException {
+        loadProperty();
         String url = properties.getProperty("url");
+        System.out.println("----------------------------------------> URL "+url);
         if (url != null) return url;
         else throw new RuntimeException("URL not specified in the Configuration.properties file.");
     }
 
-    public ChromeOptions setChromeOptions(){
-        System.setProperty(
-                properties.getProperty("driverInformartion"),
-                getDriverPath());
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
+    public ChromeOptions setChromeOptions() {
+        options = new ChromeOptions();
+        /*options.addArguments("start-maximized");
         options.addArguments("--disable-extensions");
-        //        options.addArguments("--auto-open-devtools-for-tabs");
+        options.addArguments("--auto-open-devtools-for-tabs");
         options.addArguments("networkConnectionEnabled");
-
         options.addArguments("--ignore-ssl-errors=yes");
-        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--ignore-certificate-errors");*/
         return options;
     }
 

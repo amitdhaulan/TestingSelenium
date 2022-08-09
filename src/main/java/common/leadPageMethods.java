@@ -3,6 +3,7 @@ package common;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import static common.BaseClass.loadProperty;
@@ -17,7 +18,7 @@ public class leadPageMethods {
         pageObjects.getLead().click();
     }
 
-    public void clickBootStrap() throws FileNotFoundException, InterruptedException {
+    public void clickBootStrap() throws IOException, InterruptedException {
         loadProperty();
         clickLead_bootStrapMenu(properties.getProperty("leadbootstrapmenu1"));
     }
