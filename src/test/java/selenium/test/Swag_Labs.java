@@ -55,5 +55,6 @@ public class Swag_Labs extends BaseClass {
 
         //Validating opened lead is the same as the clicked one
         Assert.assertEquals(follow_id_actual.trim(),expected.trim());
+
    }
 }
